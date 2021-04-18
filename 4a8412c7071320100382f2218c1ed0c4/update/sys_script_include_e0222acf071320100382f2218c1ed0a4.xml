@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_604347_ascnow.AssessmentsTestResults</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>Gets assessments dat from ASC</description>
+        <name>AssessmentsTestResults</name>
+        <script><![CDATA[var AssessmentsTestResults = Class.create();
+AssessmentsTestResults.prototype = {
+    initialize: function() {
+    },
+	
+	//---------------------------------------------------------------
+    // Return available assessments
+    getAssessments: function () {
+		
+		var hasNext = false;
+        var assessments = [];
+        var page = 0;   
+		var communicationUtils = new CommunicationUtils();
+		var appUtils = new AppUtils();
+
+        // Prepare request
+		var uri  = 'https://management.azure.com/providers/Microsoft.ResourceGraph/resources?api-version=2018-09-01-preview';
+		var body = "{'subscriptions':['212f9889-769e-45ae-ab43-6da33674bd26'],'options':{'$top':10,'$skip':0,'$skipToken':'', 'resultFormat': 'objectArray'},'query':'securityresources | where type == 'microsoft.security/assessments' | order by name asc'}";
+        var pagedRequest = communicationUtils.buildRESTMessage('post', uri, body, null);
+
+        do {    
+            // Request asc assessments
+            var pagedResponse = pagedRequest.execute();
+            var pagedResponseBody = pagedResponse.getBody();
+            var pagedhttpStatus = pagedResponse.getStatusCode();
+            var pagedObj = JSON.parse(pagedResponseBody);
+
+            if(pagedhttpStatus == 200) {
+                // when successful connection, update last sync
+                if(pagedObj.value) {
+                    assessments = assessments.concat(pagedObj.value.data);
+                }
+            }
+            else {
+                appUtils.log('\nError code: ' + pagedhttpStatus + '\nMessage:\n' + pagedResponseBody);
+            }
+
+            if (pagedObj.value.skipToken != "") { // if true, more incidents available
+
+                hasNext = true;
+                var skip = pagedObj.value.skipToken;
+				body = "{'subscriptions':['212f9889-769e-45ae-ab43-6da33674bd26'],'options':{'$top':10,'$skip':0,'$skipToken':'${skip}', 'resultFormat': 'objectArray'},'query':'securityresources | where type == 'microsoft.security/assessments' | order by name asc'}";
+				
+                pagedRequest = communicationUtils.buildRESTMessage('post', uri, body, null); 
+                page++;
+            }
+            else {
+                hasNext = false;
+            }
+
+        }while (hasNext);
+		
+		return assessments;
+	},
+	
+    //---------------------------------------------------------------
+    // Create new ServiceNow incidents
+	
+    createIncidents: function (assessments) {
+		var incidentTable = gs.getProperty('x_556309_microsoft.incidentTableName');
+        var incidentUniqueKey = gs.getProperty('x_556309_microsoft.incidentUniqueKey');
+        var status = gs.getProperty('x_556309_microsoft.statusField');
+        var severity = gs.getProperty('x_556309_microsoft.severityField');
+        var createdIncidents = 0;
+	},
+	
+   //---------------------------------------------------------------
+	
+    type: 'AssessmentsTestResults'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-04-08 12:15:59</sys_created_on>
+        <sys_id>e0222acf071320100382f2218c1ed0a4</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>AssessmentsTestResults</sys_name>
+        <sys_package display_value="ASCNOW" source="x_604347_ascnow">4a8412c7071320100382f2218c1ed0c4</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="ASCNOW">4a8412c7071320100382f2218c1ed0c4</sys_scope>
+        <sys_update_name>sys_script_include_e0222acf071320100382f2218c1ed0a4</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-04-18 13:41:21</sys_updated_on>
+    </sys_script_include>
+</record_update>
