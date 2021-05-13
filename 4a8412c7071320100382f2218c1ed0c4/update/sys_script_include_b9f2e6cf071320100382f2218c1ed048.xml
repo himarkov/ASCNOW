@@ -24,9 +24,9 @@ CommunicationUtils.prototype = {
 	// Builds the ServiceNow REST message
     buildRESTMessage: function(method, uri, body, skipToken) {
 
-        var token = this.getAccessToken(environment);
+        var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyIsImtpZCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDcvIiwiaWF0IjoxNjIwODA4NzAxLCJuYmYiOjE2MjA4MDg3MDEsImV4cCI6MTYyMDgxMjYwMSwiX2NsYWltX25hbWVzIjp7Imdyb3VwcyI6InNyYzEifSwiX2NsYWltX3NvdXJjZXMiOnsic3JjMSI6eyJlbmRwb2ludCI6Imh0dHBzOi8vZ3JhcGgud2luZG93cy5uZXQvNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3L3VzZXJzLzhiMzQ1ZDI1LTk2ZDgtNGFiMy04NGZjLTIwOWRiYWUxYzZmZi9nZXRNZW1iZXJPYmplY3RzIn19LCJhY3IiOiIxIiwiYWlvIjoiQVZRQXEvOFRBQUFBbUFkTjk5NkNIclppNzNKdEJXV1Z1Y3FwbGRRR2dOYVRzbXl3RzJydmh2VDdJdjkxckh5T0Fzbmk0VC9salVOK2xXSGZ2M2t2MHNsbldlZGUxOVQrdnZZelpRcnFZM0VDdkZmVG1KZ29IUFE9IiwiYW1yIjpbInB3ZCIsInJzYSIsIm1mYSJdLCJhcHBpZCI6ImM0NGI0MDgzLTNiYjAtNDljMS1iNDdkLTk3NGU1M2NiZGYzYyIsImFwcGlkYWNyIjoiMiIsImRldmljZWlkIjoiMTRmNmY3MzYtYTgxMC00MDc2LTg0NjAtMzFiNWVlYjJjYTc3IiwiZmFtaWx5X25hbWUiOiJNYXJrb3ZpdGNoIiwiZ2l2ZW5fbmFtZSI6IkhpbGEiLCJpcGFkZHIiOiI1LjI5LjU4Ljc4IiwibmFtZSI6IkhpbGEgTWFya292aXRjaCIsIm9pZCI6IjhiMzQ1ZDI1LTk2ZDgtNGFiMy04NGZjLTIwOWRiYWUxYzZmZiIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS03MjA1MTYwNy0xNzQ1NzYwMDM2LTEwOTE4Nzk1Ni0yNjY4NzIiLCJwdWlkIjoiMTAwMzAwMDBBNUMzQzZERSIsInJoIjoiMC5BUm9BdjRqNWN2R0dyMEdScXkxODBCSGJSNE5BUzhTd084Rkp0SDJYVGxQTDN6d2FBR2MuIiwic2NwIjoidXNlcl9pbXBlcnNvbmF0aW9uIiwic3ViIjoiZWN4elJ2V3BuTlN3U0VkZnQxem95RjR4aDFsdlN6WUNTeE5nYm5jUWtKcyIsInRpZCI6IjcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0NyIsInVuaXF1ZV9uYW1lIjoiaGltYXJrb3ZAbWljcm9zb2Z0LmNvbSIsInVwbiI6ImhpbWFya292QG1pY3Jvc29mdC5jb20iLCJ1dGkiOiJwTlNZYmF2cnFFdVJvbGNYQ0hKSkFBIiwidmVyIjoiMS4wIiwieG1zX3RjZHQiOjEyODkyNDE1NDd9.jip21L2Lbia3b9MHtnEGSRZ5gI8PoQ6nvzw9GilEU62NovxBj5VGdMzgw1FuroHDTOmyFX7yIhVcFECrUbwoDw4kimen8gsd8z8VvWx0NQLd8pr_QSbOeEaAJRF5rs2jqh4YtmU-68MwsL4uKFXvQ8hCZAZyboB3bPtJJGm0PR9ReVZssICTZHBwArynyET9CFydIDyAB_dgUV4R47xXuV0Nx4u7MYtmiGbz31NaMW6a4bIgL3RKKm_FusRFx959PshHRw7cemls_Bp4Osq7rik-8ncZRco66FqfPohgKcSBvW_s_K3M5VshkUwIm27_NU1lJT2g6ifdsvzvfAQ_6Q";//this.getAccessToken(environment);
 
-        request = new sn_ws.RESTMessageV2();
+        var request = new sn_ws.RESTMessageV2();
 
         // Default method is GET
         if(!method) {
@@ -39,13 +39,12 @@ CommunicationUtils.prototype = {
         }
 		
         if(body) {
-            request.setRequestBody(JSON.stringify(body));
+            request.setRequestBody(body);
         }
         
         request.setEndpoint(uri);
         request.setRequestHeader('Content-Type','application/json');
-        request.setRequestHeader("Accept","application/json");
-        request.setRequestHeader('Authorization','Bearer ' + token.getAccessToken());
+        request.setRequestHeader('Authorization','Bearer ' + token);
         
         return request;
 
@@ -78,13 +77,13 @@ CommunicationUtils.prototype = {
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2021-04-08 12:19:03</sys_created_on>
         <sys_id>b9f2e6cf071320100382f2218c1ed048</sys_id>
-        <sys_mod_count>2</sys_mod_count>
+        <sys_mod_count>17</sys_mod_count>
         <sys_name>CommunicationUtils</sys_name>
         <sys_package display_value="ASCNOW" source="x_604347_ascnow">4a8412c7071320100382f2218c1ed0c4</sys_package>
         <sys_policy>read</sys_policy>
         <sys_scope display_value="ASCNOW">4a8412c7071320100382f2218c1ed0c4</sys_scope>
         <sys_update_name>sys_script_include_b9f2e6cf071320100382f2218c1ed048</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2021-04-08 12:32:28</sys_updated_on>
+        <sys_updated_on>2021-05-12 08:56:32</sys_updated_on>
     </sys_script_include>
 </record_update>
