@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_604347_ascnow.AppUtils</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>AppUtils</name>
+        <script><![CDATA[var AppUtils = Class.create();
+AppUtils.prototype = {
+    initialize: function() {
+    },
+	
+	//---------------------------------------------------------------
+    // Log messages in system log
+    log: function(msg) {
+        gs.info(msg);
+    },
+
+    //---------------------------------------------------------------
+
+    type: 'AppUtils'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-04-18 13:28:48</sys_created_on>
+        <sys_id>f6d2d65a072320100382f2218c1ed029</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>AppUtils</sys_name>
+        <sys_package display_value="ASCNOW" source="x_604347_ascnow">4a8412c7071320100382f2218c1ed0c4</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="ASCNOW">4a8412c7071320100382f2218c1ed0c4</sys_scope>
+        <sys_update_name>sys_script_include_f6d2d65a072320100382f2218c1ed029</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-04-18 13:29:05</sys_updated_on>
+    </sys_script_include>
+</record_update>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element extends="task" label="Incidents" max_length="40" name="x_604347_ascnow_incidents" sizeclass="141" type="collection">
+        <element default="&quot;&quot;" display="true" label="ASC portal link" max_length="1024" name="asc_portal_link" reference="x_604347_ascnow__empty_" type="url"/>
+    </element>
+</database>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_604347_ascnow.CommunicationUtils</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>Utils for communication from the app to Azure</description>
+        <name>CommunicationUtils</name>
+        <script><![CDATA[var CommunicationUtils = Class.create();
+CommunicationUtils.prototype = {
+    initialize: function() {
+    },
+	
+	//---------------------------------------------------------------
+	
+	// Log messages in system log
+    log: function(msg) {
+        gs.info(msg);
+    },
+	
+	//---------------------------------------------------------------
+	
+	// Builds the ServiceNow REST message
+    buildRESTMessage: function(method, uri, body, skipToken) {
+
+        var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyIsImtpZCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC80NGZjOTNkOS0yOTkyLTQ1NzMtOWQ2OC1kM2UzNWY1NTAxZDQvIiwiaWF0IjoxNjIxNDI2NTk5LCJuYmYiOjE2MjE0MjY1OTksImV4cCI6MTYyMTQzMDQ5OSwiYWNyIjoiMSIsImFpbyI6IkFYUUFpLzhUQUFBQVkrQU5xY1c4eTEzUkdoRUdFLzN4U2pSeTBQU3dEcGZMa0RuS3Npd1Q0dXFvSVFtYWdESk5WaVd4RE1kRk1sQXdpN2NJQk5kZFBWNEJxNnh5Y2dYeW5XQmIrMlAvQ3NCOUp5aEcrSHBwd0VSOEIzU09RNmJ5bWtzUHdkVEpIYjdpalJEbGh5K2kwOGE5QUpvT1ltSjlqdz09IiwiYWx0c2VjaWQiOiI1OjoxMDAzMDAwMEE1QzNDNkRFIiwiYW1yIjpbInB3ZCIsInJzYSJdLCJhcHBpZCI6ImM0NGI0MDgzLTNiYjAtNDljMS1iNDdkLTk3NGU1M2NiZGYzYyIsImFwcGlkYWNyIjoiMiIsImVtYWlsIjoiSGlsYS5NYXJrb3ZpdGNoQG1pY3Jvc29mdC5jb20iLCJncm91cHMiOlsiZjVkMDRjNzYtZTkwYi00YTBiLThlMjEtNTQ0NGNiMjNlYTJmIl0sImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0Ny8iLCJpcGFkZHIiOiI1LjI5LjU4Ljc4IiwibmFtZSI6IkhpbGEgTWFya292aXRjaCIsIm9pZCI6ImRlNWM5N2M5LTFiYzktNGQ3ZC1hYzJmLTQzMjMxNmE0NTNmYiIsInB1aWQiOiIxMDAzMDAwMEFDNTIyQzJCIiwicmgiOiIwLkFTRUEyWlA4UkpJcGMwV2RhTlBqWDFVQjFJTkFTOFN3TzhGSnRIMlhUbFBMM3p3aEFHYy4iLCJzY3AiOiJ1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiJpUWd1bHZkdktvSVhYNFdLSEhMZkpQSEFHbFVYSG1kYWVLdWN6cE9jZEVNIiwidGlkIjoiNDRmYzkzZDktMjk5Mi00NTczLTlkNjgtZDNlMzVmNTUwMWQ0IiwidW5pcXVlX25hbWUiOiJIaWxhLk1hcmtvdml0Y2hAbWljcm9zb2Z0LmNvbSIsInV0aSI6ImM5WGdNNHdpa0VTVWNQQ25TTFVaQUEiLCJ2ZXIiOiIxLjAiLCJ3aWRzIjpbIjYyZTkwMzk0LTY5ZjUtNDIzNy05MTkwLTAxMjE3NzE0NWUxMCJdLCJ4bXNfdGNkdCI6MTUzMTE0MTY5OX0.LAy5tCMuWRTx7na9kBJet9Fcvi4ap26lEfLiaKHsjFd4uJPnIoy6imzJMEdtVVtBpQ9p8xzDl4WBNM0ftzlN2O97frSUzXuBZi9ogWkTQaRSs6Pi_TGQ4gVP5vZL1iTD21vbA2VtE9dDrkzpAHqEpqVVzd1CNLx5pb5M2-suNZxs-N4-5wrUYy_SQxMTTbgs8C1vC5bGyiYkdrzTKOq0Go2xU8YUzeu_F64_j5OpsSBBhYNd8yQ9wL4d67IsIHeheAeJoty-lH1MyzVkVU65yS2WYm8BsPPQ-gEb3_rnevxoOw2uo43wtHT3HoBTZyV1Ls0O1koTRCK7yvgybJDBTQ";//this.getAccessToken(environment);
+
+        var request = new sn_ws.RESTMessageV2();
+
+        // Default method is GET
+        if(!method) {
+            method = 'get';
+        }
+        request.setHttpMethod(method);
+
+        if(skipToken) { 
+            request.setQueryParameter('$skipToken', skipToken);
+        }
+		
+        if(body) {
+            request.setRequestBody(body);
+        }
+        
+        request.setEndpoint(uri);
+        request.setRequestHeader('Content-Type','application/json');
+        request.setRequestHeader('Authorization','Bearer ' + token);
+        
+        return request;
+
+    },
+
+    //---------------------------------------------------------------
+    // Return skiptoken when more results to fetch during the API call
+    getSkipToken: function(nextLink) {
+        var skipToken = nextLink.split('&');
+        skipToken = skipToken[skipToken.length -1].replace('$skipToken=', ''); //contains skitToken only
+
+        return skipToken;
+    },
+
+    //---------------------------------------------------------------
+    // Request access token using the saved application OAuth application
+    getAccessToken: function(environment) {
+        var oAuthClient = new sn_auth.GlideOAuthClient();
+        var params = {grant_type:"client_credentials",resource:"https://management.azure.com/"};
+        var tokenResponse = oAuthClient.requestToken(environment.oauth_provider,global.JSON.stringify(params)); //using the Oauth provider specified in the config table
+        
+        return tokenResponse.getToken();
+    },
+
+    //---------------------------------------------------------------
+
+    type: 'CommunicationUtils'
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-04-08 12:19:03</sys_created_on>
+        <sys_id>b9f2e6cf071320100382f2218c1ed048</sys_id>
+        <sys_mod_count>25</sys_mod_count>
+        <sys_name>CommunicationUtils</sys_name>
+        <sys_package display_value="ASCNOW" source="x_604347_ascnow">4a8412c7071320100382f2218c1ed0c4</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="ASCNOW">4a8412c7071320100382f2218c1ed0c4</sys_scope>
+        <sys_update_name>sys_script_include_b9f2e6cf071320100382f2218c1ed048</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-05-19 12:25:30</sys_updated_on>
+    </sys_script_include>
+</record_update>
